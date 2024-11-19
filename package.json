@@ -10,9 +10,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "autoprefixer": "^10.4.20",
     "next": "^14.2.4",
     "react": "^18",
+=======
+    "next": "14.2.4",
+    "react": "^18",0
+>>>>>>> 94cee957d52aa34e6ec6429ce6aa224201befb02
     "react-dom": "^18"
   },
   "devDependencies": {
