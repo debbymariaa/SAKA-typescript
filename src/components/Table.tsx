@@ -1,47 +1,64 @@
 import React from "react";
 
-export type ColumnDefs = {
-    title: string;
-} & (
-        | {
-            field: string;
-        }
-        | {
-            render: (rowData: Record<string, any>) => React.ReactNode;
-        }
-    );
-
-const Table = ({
-    columnDefs,
-    data,
-}: {
-    columnDefs: ColumnDefs[];
-    data: Record<string, any>[];
-}) => {
-    return (
-        <table className="min-w-full divide-y overflow-hidden rounded-lg divide-gray-800 shadow-lg">
-            <thead className="bg-green-200">
-                <tr>
-                    {columnDefs.map((column, index) => (
-                        <th key={index} scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            {column.title}
-                        </th>
-                    ))}
-                </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-                {data.map((rowData, index) => (
-                    <tr key={index} className="cursor-pointer hover:bg-gray-100">
-                        {columnDefs.map((column, index) => (
-                            <td key={index} className="px-6 py-4 whitespace-nowrap">
-                                {"field" in column ? rowData[column.field!] : column.render ? column.render(rowData) : null}
-                            </td>
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-    );
+// Definisikan tipe data generic untuk Table
+type TableProps<T> = {
+  data: T[];  // Array dari data yang bertipe T
+  columns: { label: string; accessor: keyof T }[];  // Kolom dengan label dan accessor untuk properti objek T
 };
 
-export default Table;
+// Komponen Table yang menggunakan Generic T
+function Table<T>({ data, columns }: TableProps<T>) {
+  return (
+    <table>
+      <thead>
+        <tr>
+          {columns.map((col) => (
+            <th key={String(col.accessor)}>{col.label}</th>  
+          ))}
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {columns.map((col) => (
+              <td key={String(col.accessor)}>{String(row[col.accessor])}</td>  
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+// Definisikan tipe data untuk karyawan
+type Employee = {
+  name: string;
+  age: number;
+  email: string;
+  phone: string;
+};
+
+// Data karyawan
+const employees: Employee[] = [
+  { name: "Desthrie", age: 18, email: "sasapi12@github.com", phone: "1234567890" },
+  { name: "Sabrina", age: 17, email: "sablubewwy@github.com", phone: "9876543210" },
+  { name: "Barusadar cipularang", age: 534, email: "brandobatubara@github.com", phone: "23876543221" },
+];
+
+// Kolom yang akan ditampilkan pada tabel
+const columns: { label: string; accessor: keyof Employee }[] = [
+  { label: "Name", accessor: "name" },
+  { label: "Age", accessor: "age" },
+  { label: "Email", accessor: "email" },
+  { label: "Phone", accessor: "phone" },
+];
+
+// Komponen utama
+export default function Home() {
+  return (
+    <div>
+      <h1>Employee Table</h1>
+      <Table data={employees} columns={columns} />
+    </div>
+  );
+}

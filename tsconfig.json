@@ -1,26 +1,30 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "target": "es5",                             // Set the target to ES5 for compatibility
+    "lib": ["dom", "dom.iterable", "esnext"],    // Include necessary libraries
+    "allowJs": true,                             // Allow JavaScript files
+    "skipLibCheck": true,                        // Skip type checking of declaration files
+    "strict": true,                              // Enable strict type-checking options
+    "noEmit": true,                              // Do not output compiled files
+    "esModuleInterop": true,                     // Enable esModuleInterop for easier imports
+    "module": "esnext",                          // Use ESNext modules
+    "moduleResolution": "node",                  // Resolve modules as Node.js does
+    "resolveJsonModule": true,                   // Allow importing JSON files
+    "isolatedModules": true,                     // Ensure each file can be safely transpiled independently
+    "jsx": "react",                              // Enable JSX for React
+    "incremental": true,                         // Enable incremental compilation
+    "baseUrl": "./src",                          // Base directory for relative imports
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["*"]                               // Map '@' to 'src' for absolute imports
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",                            // Include Next.js environment types
+    "**/*.ts",                                  // Include all TypeScript files
+    "**/*.tsx",                                 // Include all TypeScript JSX files
+    ".next/types/**/*.ts"                       // Include Next.js types
+  ],
+  "exclude": [
+    "node_modules"                              // Exclude node_modules directory
+  ]
 }
